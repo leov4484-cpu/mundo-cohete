@@ -12,7 +12,7 @@
     nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: #0d0f17; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #222; }
     .logo { font-size: 1.25rem; font-weight: 900; color: #fff; text-decoration: none; }
     .logo span { color: var(--accent); }
-    .wa-top { background: #25D366; color: #000; text-decoration: none; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 800; font-size: 0.85rem; }
+    .cart-btn { background: var(--accent); color: #fff; border: none; padding: 0.6rem 1.1rem; border-radius: 50px; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
     .hero { text-align: center; padding: 3rem 5% 2rem; max-width: 800px; margin: 0 auto; }
     .badge { display: inline-block; background: rgba(255,85,0,0.15); color: var(--accent); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; border: 1px solid var(--accent); }
     .hero h1 { font-size: 2rem; line-height: 1.2; margin-bottom: 1rem; color: var(--gold); }
@@ -32,10 +32,21 @@
     .card-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; flex-grow: 1; }
     .card-foot { display: flex; justify-content: space-between; align-items: center; }
     .price { font-size: 1.2rem; font-weight: 800; color: var(--gold); }
-    .pedir-btn { background: #25D366; color: #000; text-decoration: none; padding: 0.55rem 0.9rem; border-radius: 8px; font-weight: 800; font-size: 0.85rem; }
+    .add-btn { background: #262b3d; color: #fff; border: 1px solid #555; padding: 0.55rem 0.9rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
     .step { background: var(--card); padding: 1.5rem; border-radius: 14px; text-align: center; border: 1px solid #252a3a; }
     .step-num { width: 38px; height: 38px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 0.8rem; }
+    .modal { display: none; position: fixed; inset: 0 0 0 auto; width: 100%; max-width: 380px; background: #11131c; z-index: 100; padding: 1.5rem; flex-direction: column; border-left: 1px solid #333; }
+    .modal.open { display: flex; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid #222; }
+    .close-btn { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+    .cart-list { flex-grow: 1; overflow-y: auto; padding: 1rem 0; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid #222; gap: 0.5rem; }
+    .qty-btn { background: #262b3d; border: none; color: #fff; width: 28px; height: 28px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; margin: 1rem 0; }
+    .wa-btn { width: 100%; background: #25D366; color: #000; border: none; padding: 0.9rem; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 0.7rem 1.3rem; border-radius: 50px; font-weight: 600; z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; }
+    .toast.show { opacity: 1; }
     footer { text-align: center; padding: 2.5rem 5%; border-top: 1px solid #222; color: var(--muted); font-size: 0.85rem; }
     .legal { background: rgba(255,204,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 0.9rem; border-radius: 8px; max-width: 650px; margin: 0 auto 1.2rem; }
   </style>
@@ -43,7 +54,7 @@
 <body>
   <nav>
     <a href="#" class="logo">&#128640; MUNDO <span>COHETE</span></a>
-    <a href="https://whatsapp.com" class="wa-top">WhatsApp &#128242;</a>
+    <button class="cart-btn" onclick="toggleCart()">&#128722; Carrito (<span id="count">0</span>)</button>
   </nav>
   <header class="hero">
     <span class="badge">&#128640; TU FESTEJO, A OTRO NIVEL</span>
@@ -56,65 +67,128 @@
     </div>
     <div class="hero-btns">
       <a href="#catalogo" class="btn-main">Ver Cat&aacute;logo</a>
-      <a href="https://whatsapp.com" class="btn-sec">&#128242; Asesoramiento</a>
+      <a href="whatsapp://send?phone=542645859859&text=Hola%20MUNDO%20COHETE!%20Necesito%20asesoramiento%20personalizado" class="btn-sec">&#128242; Asesoramiento</a>
     </div>
   </header>
   <section id="catalogo" class="container">
-    <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; el bot&oacute;n verde en cualquier producto para pedirlo por WhatsApp.</p></div>
-    <div class="grid">
-      <div class="card"><img src="estallos-40.jpg"><div class="card-body"><h3 class="card-title">Estallos Cash Boom (Caja x40 unid.)</h3><p class="card-desc">Caja cerrada con 40 cajitas.</p><div class="card-foot"><span class="price">$15.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="estallos.jpg"><div class="card-body"><h3 class="card-title">Estallos Cash Boom (Pack x5 unid.)</h3><p class="card-desc">Pack de 5 cajitas de estallos.</p><div class="card-foot"><span class="price">$2.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="fosforo.jpg"><div class="card-body"><h3 class="card-title">F&oacute;sforo cohete x40 unid.</h3><p class="card-desc">Caja con 40 unidades de estruendo.</p><div class="card-foot"><span class="price">$6.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="floreritos.jpg"><div class="card-body"><h3 class="card-title">Floreritos x20 unid.</h3><p class="card-desc">Pack de 20 floreritos luminosos de colores y estruendo.</p><div class="card-foot"><span class="price">$5.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="colita.jpg"><div class="card-body"><h3 class="card-title">Colita de drag&oacute;n x40 unid.</h3><p class="card-desc">Pack de 40 unidades de efecto chispeante.</p><div class="card-foot"><span class="price">$2.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="bengala-humo.jpg"><div class="card-body"><h3 class="card-title">Bengala de humo x5 unid.</h3><p class="card-desc">Pack de 5 bengalas de humo de color.</p><div class="card-foot"><span class="price">$4.200</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="base-misil16.jpg"><div class="card-body"><h3 class="card-title">Base misil 16 tiros x4 unid.</h3><p class="card-desc">Pack de 4 bater&iacute;as de 16 disparos.</p><div class="card-foot"><span class="price">$12.300</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="base-misil.jpg"><div class="card-body"><h3 class="card-title">Base misil 25 tiros x4 unid.</h3><p class="card-desc">Pack de 4 bater&iacute;as de 25 disparos.</p><div class="card-foot"><span class="price">$16.200</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="matabrujas.jpg"><div class="card-body"><h3 class="card-title">Matabrujas x5 unid.</h3><p class="card-desc">Pack de 5 petardos de gran potencia.</p><div class="card-foot"><span class="price">$5.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="matabrujas.jpg"><div class="card-body"><h3 class="card-title">Matabrujas caja x10 packs</h3><p class="card-desc">Caja mayorista con 10 packs.</p><div class="card-foot"><span class="price">$48.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="cañon-th1.jpg"><div class="card-body"><h3 class="card-title">Ca&ntilde;&oacute;n TH1 x2 unid.</h3><p class="card-desc">Pack de 2 ca&ntilde;ones luminosos y sonoros.</p><div class="card-foot"><span class="price">$6.600</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>      <div class="card"><img src="volcancito.jpg"><div class="card-body"><h3 class="card-title">Volcancito estruendoso x5 unid.</h3><p class="card-desc">Pack de 5 volcan super estruendo.</p><div class="card-foot"><span class="price">$5.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="torta-2000.jpg"><div class="card-body"><h3 class="card-title">Torta variedad 2000 x1 unid.</h3><p class="card-desc">Torta a&eacute;rea con m&uacute;ltiples efectos.</p><div class="card-foot"><span class="price">$25.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="torta-coliseo.jpg"><div class="card-body"><h3 class="card-title">Torta coliseo x1 unid.</h3><p class="card-desc">Torta de 12 fuegos artificiales diferentes.</p><div class="card-foot"><span class="price">$20.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="huevito.jpg"><div class="card-body"><h3 class="card-title">Huevito de drag&oacute;n x24 unid.</h3><p class="card-desc">Caja con 24 packd de 5 unidades crepitantes.</p><div class="card-foot"><span class="price">$14.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="fogueta.jpg"><div class="card-body"><h3 class="card-title">Fogueta 3 tiros x3 unid.</h3><p class="card-desc">Pack de 3 foguetas de 3 disparos.</p><div class="card-foot"><span class="price">$7.700</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="canita.jpg"><div class="card-body"><h3 class="card-title">Ca&ntilde;ita silvadora x12 unid.</h3><p class="card-desc">Pack de 12 ca&ntilde;itas voladoras.</p><div class="card-foot"><span class="price">$3.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="caña-caja.jpg"><div class="card-body"><h3 class="card-title">Ca&ntilde;ita silvadora x12 packs</h3><p class="card-desc">Bulto mayorista con 12 packs.</p><div class="card-foot"><span class="price">$30.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="caña-paracaidas.jpg"><div class="card-body"><h3 class="card-title">Ca&ntilde;a paraca&iacute;das x6 unid.</h3><p class="card-desc">Pack de 6 ca&ntilde;as con paraca&iacute;das luminoso.</p><div class="card-foot"><span class="price">$6.200</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="candela-10.jpg"><div class="card-body"><h3 class="card-title">Candela 10 tiros x6 unid.</h3><p class="card-desc">Pack de 6 candelas de 10 disparos.</p><div class="card-foot"><span class="price">$5.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="candela-30.jpg"><div class="card-body"><h3 class="card-title">Candela 20 tiros x6 unid.</h3><p class="card-desc">Pack de 6 candelas de 20 disparos.</p><div class="card-foot"><span class="price">$7.800</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="candela.jpg"><div class="card-body"><h3 class="card-title">Candela 30 tiros x6 unid.</h3><p class="card-desc">Pack de 6 candelas de 30 disparos.</p><div class="card-foot"><span class="price">$9.700</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="avioncito.jpg"><div class="card-body"><h3 class="card-title">Avioncito x6 unid.</h3><p class="card-desc">Pack de 6 avioncitos giratorios.</p><div class="card-foot"><span class="price">$6.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="abejitas.jpg"><div class="card-body"><h3 class="card-title">Abejitas giratoria x12 unid.</h3><p class="card-desc">Pack de 12 abejitas luminosas.</p><div class="card-foot"><span class="price">$4.500</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="mortero.jpg"><div class="card-body"><h3 class="card-title">Mortero x6 unid.</h3><p class="card-desc">Pack de 6 morteros de impacto a&eacute;reo.</p><div class="card-foot"><span class="price">$10.600</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="terremoto.jpg"><div class="card-body"><h3 class="card-title">Terremoto x5 unid.</h3><p class="card-desc">Pack de 5 petardos de alto impacto.</p><div class="card-foot"><span class="price">$4.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="terremoto.jpg"><div class="card-body"><h3 class="card-title">Terremoto caja x10 packs</h3><p class="card-desc">Caja mayorista con 10 packs.</p><div class="card-foot"><span class="price">$30.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="bengalita.jpg"><div class="card-body"><h3 class="card-title">Bengalita x5 packs</h3><p class="card-desc">Combo de 5 packs de bengalitas.</p><div class="card-foot"><span class="price">$11.300</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="estrellitas.jpg"><div class="card-body"><h3 class="card-title">Estrellitas x10 packs x5 unid.</h3><p class="card-desc">10 packs de 5 estrellitas cada uno.</p><div class="card-foot"><span class="price">$6.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="estrellitas.jpg"><div class="card-body"><h3 class="card-title">Estrellitas x10 packs x10 unid.</h3><p class="card-desc">10 packs de 10 estrellitas cada uno.</p><div class="card-foot"><span class="price">$9.000</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="batería-40.jpg"><div class="card-body"><h3 class="card-title">Bater&iacute;a x40 unid.</h3><p class="card-desc">Bater&iacute;a de 40 unid.</p><div class="card-foot"><span class="price">$19.300</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-      <div class="card"><img src="batería.jpg"><div class="card-body"><h3 class="card-title">Bater&iacute;a x10 unid.</h3><p class="card-desc">Bater&iacute;a de 10 unid.</p><div class="card-foot"><span class="price">$6.800</span><a href="https://whatsapp.com" class="pedir-btn">Pedir &#128242;</a></div></div></div>
-</div>
+    <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
+    <div class="grid" id="grid"></div>
     <div style="text-align:center; background:#131620; border:2px dashed #ff5500; border-radius:14px; padding:1.8rem 1.2rem; margin-top:2rem;">
       <h3 style="color:#ffcc00; font-size:1.25rem; margin-bottom:0.8rem;">&#127878; Y MUCHOS M&Aacute;S... CONSULT&Aacute; SI HAY ALGO QUE BUSQUES Y NO EST&Eacute; EN EL CAT&Aacute;LOGO</h3>
       <a href="whatsapp://send?phone=542645859859&text=Hola%20MUNDO%20COHETE!%20Busco%20un%20producto%20que%20no%20vi%20en%20el%20catalogo" class="btn-main" style="display:inline-block;">Consultar por WhatsApp &#128242;</a>
     </div>
   </section>
-
   <section class="container">
     <div class="sec-title"><h2>Tres pasos, sin vueltas</h2></div>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>Eleg&iacute; tu producto</h3><p>Revis&aacute; el cat&aacute;logo y los precios actualizados.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>Ped&iacute; por WhatsApp</h3><p>Toc&aacute; "Pedir" y se abre nuestro chat directo.</p></div>
+      <div class="step"><div class="step-num">1</div><h3>Arm&aacute; tu carrito</h3><p>Eleg&iacute; los productos y cantidades del cat&aacute;logo.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Envi&aacute; el pedido</h3><p>Abr&iacute; el carrito arriba y toc&aacute; el bot&oacute;n verde de WhatsApp.</p></div>
       <div class="step"><div class="step-num">3</div><h3>Env&iacute;o a domicilio</h3><p>Coordinamos pago y entrega en tu puerta &#128666;.</p></div>
     </div>
   </section>
-
   <footer>
     <div class="legal"><strong>+16 Venta exclusiva a mayores de 16 a&ntilde;os.</strong> Uso bajo responsabilidad de un adulto, a cielo abierto y lejos de personas, animales y materiales inflamables.</div>
     <p>&copy; 2026 MUNDO COHETE. Todos los derechos reservados.</p>
   </footer>
+  <div class="modal" id="modal">
+    <div class="modal-head"><h3>Tu Carrito</h3><button class="close-btn" onclick="toggleCart()">&#10005;</button></div>
+    <div class="cart-list" id="cart-list"></div>
+    <div>
+      <div class="total-row"><span>Total:</span><span id="total">$0</span></div>
+      <button class="wa-btn" onclick="enviarWA()">Enviar pedido por WhatsApp &#128242;</button>
+    </div>
+  </div>
+  <div class="toast" id="toast">Agregado al carrito</div>
+    <script>
+    const TEL = "542645859859";
+    const RESP = "https://unsplash.com";
+    const items = [
+      ["Estallos Cash Boom (Caja x40 unid.)", "Caja cerrada con 40 cajitas.", 15000, "estallos.jpg"],
+      ["Estallos Cash Boom (Pack x5 unid.)", "Pack de 5 cajitas de estallos.", 2500, "estallos.jpg"],
+      ["Fósforo cohete x40 unid.", "Caja con 40 unidades con silbido y estruendo.", 6500, "fosforo.jpg"],
+      ["Floreritos x20 unid.", "Pack de 20 floreritos luminosos de colores.", 5500, "floreros.jpg"],
+      ["Colita de dragón x40 unid.", "Pack de 40 unidades de efecto chispeante.", 2500, "colita.jpg"],
+      ["Bengala de humo x5 unid.", "Pack de 5 bengalas de humo de color.", 4200, "bengala-humo.jpg"],
+      ["Base misil 16 tiros x4 unid.", "Pack de 4 baterías de 16 disparos.", 12300, "base-misil.jpg"],
+      ["Base misil 25 tiros x4 unid.", "Pack de 4 baterías de 25 disparos.", 16200, "base-misil.jpg"],
+      ["Matabrujas x5 unid.", "Pack de 5 petardos de gran potencia.", 5000, "matabrujas.jpg"],
+      ["Matabrujas caja x10 packs", "Caja mayorista con 10 packs.", 48000, "matabrujas.jpg"],
+      ["Cañón TH1 x2 unid.", "Pack de 2 cañones luminosos y sonoros.", 6600, "cañón-th1.jpg"],
+      ["Volcancito estruendoso x5 unid.", "Pack de 5 fuentes con chispas y estruendo.", 5500, "volcancito.jpg"],
+      ["Torta variedad 2000 x1 unid.", "Torta aérea con múltiples efectos.", 25000, "torta-2000.jpg"],
+      ["Torta coliseo x1 unid.", "Torta de luces con apertura amplia.", 20000, "torta-coliseo.jpg"],
+      ["Huevito de dragón x24 unid.", "Caja con 24 unidades crepitantes.", 14000, "huevito.jpg"],
+      ["Fogueta 3 tiros x3 unid.", "Pack de 3 foguetas de 3 disparos.", 7700, "fogueta.jpg"],
+      ["Cañita salvadora x12 unid.", "Pack de 12 cañitas voladoras.", 3000, "canita.jpg"],
+      ["Cañita salvadora x12 packs", "Bulto mayorista con 12 packs.", 30500, "canita.jpg"],
+      ["Caña paracaídas x6 unid.", "Pack de 6 cañas con paracaídas luminoso.", 6200, "caña-paracaidas.jpg"],
+      ["Candela 10 tiros x6 unid.", "Pack de 6 candelas de 10 disparos.", 5500, "candela-10.jpg"],
+      ["Candela 20 tiros x6 unid.", "Pack de 6 candelas de 20 disparos.", 7800, "candela.jpg"],
+      ["Candela 30 tiros x6 unid.", "Pack de 6 candelas de 30 disparos.", 9700, "candela-30.jpg"],
+      ["Avioncito x6 unid.", "Pack de 6 avioncitos giratorios.", 6500, "avioncito.jpg"],
+      ["Abejitas giratoria x12 unid.", "Pack de 12 abejitas luminosas.", 4500, "abejitas.jpg"],
+      ["Mortero x6 unid.", "Pack de 6 morteros de impacto aéreo.", 10600, "mortero.jpg"],
+      ["Terremoto x5 unid.", "Pack de 5 petardos de alto impacto.", 4000, "terremoto.jpg"],
+      ["Terremoto caja x10 packs", "Caja mayorista con 10 packs.", 30000, "terremoto.jpg"],
+      ["Bengalita x5 packs", "Combo de 5 packs de bengalitas.", 11300, "bengalita.jpg"],
+      ["Estrellitas x10 packs x5 unid.", "10 packs de 5 estrellitas cada uno.", 6000, "estrellitas.jpg"],
+      ["Estrellitas x10 packs x10 unid.", "10 packs de 10 estrellitas cada uno.", 9000, "estrellitas.jpg"],
+      ["Batería x40 unid.", "Batería de 40 disparos consecutivos.", 19300, "batería-40.jpg"],
+      ["Batería x10 unid.", "Batería compacta de 10 disparos.", 6800, "batería.jpg"]
+    ];
+    let cart = [];
+    document.getElementById("grid").innerHTML = items.map((p, i) => `
+      <div class="card">
+        <img src="${p}" onerror="this.src='${RESP}'">
+        <div class="card-body">
+          <h3 class="card-title">${p}</h3>
+          <p class="card-desc">${p}</p>
+          <div class="card-foot">
+            <span class="price">$${p.toLocaleString('es-AR')}</span>
+            <button class="add-btn" onclick="add(${i})">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    function add(i) {
+      const ex = cart.find(x => x.i === i);
+      if (ex) ex.c++; else cart.push({ i, c: 1 });
+      upd();
+      const t = document.getElementById("toast");
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 1400);
+    }
+    function qty(i, d) {
+      const ex = cart.find(x => x.i === i);
+      if (!ex) return;
+      ex.c += d;
+      if (ex.c <= 0) cart = cart.filter(x => x.i !== i);
+      upd();
+    }
+    function upd() {
+      document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
+      const tot = cart.reduce((s, x) => s + (items[x.i] * x.c), 0);
+      document.getElementById("total").innerText = "$" + tot.toLocaleString('es-AR');
+      document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => `
+        <div class="cart-item">
+          <div><strong>${items[x.i]}</strong><br><span style="color:var(--gold)">$${(items[x.i]*x.c).toLocaleString('es-AR')}</span></div>
+          <div>
+            <button class="qty-btn" onclick="qty(${x.i},-1)">-</button>
+            <span style="margin:0 6px">${x.c}</span>
+            <button class="qty-btn" onclick="qty(${x.i},1)">+</button>
+          </div>
+        </div>
+      `).join('') : '<p style="color:var(--muted);text-align:center;margin-top:2rem">Tu carrito está vacío.</p>';
+    }
+    function toggleCart() { document.getElementById("modal").classList.toggle("open"); upd(); }
+    function enviarWA() {
+      if (!cart.length) return alert("Agregá productos primero.");
+      let m = "Hola MUNDO COHETE! Mi pedido:\n\n";
+      cart.forEach(x => m += `- ${x.c}x ${items[x.i]} ($${(items[x.i]*x.c).toLocaleString('es-AR')})\n`);
+      const tot = cart.reduce((s, x) => s + (items[x.i] * x.c), 0);
+      m += `\nTotal: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
+      window.location.href = `whatsapp://send?phone=${TEL}&text=${encodeURIComponent(m)}`;
+    }
+  </script>
 </body>
 </html>
-
-
-      
