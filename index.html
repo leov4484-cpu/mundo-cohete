@@ -99,7 +99,7 @@
     </div>
   </div>
   <div class="toast" id="toast">Agregado al carrito</div>
-    <script>
+      <script>
     const TEL = "542645859859";
     const RESP = "https://unsplash.com";
     const items = [
@@ -139,12 +139,12 @@
     let cart = [];
     document.getElementById("grid").innerHTML = items.map((p, i) => `
       <div class="card">
-        <img src="${p}" onerror="this.src='${RESP}'">
+        <img src="${p[3]}" onerror="this.src='${RESP}'">
         <div class="card-body">
-          <h3 class="card-title">${p}</h3>
-          <p class="card-desc">${p}</p>
+          <h3 class="card-title">${p[0]}</h3>
+          <p class="card-desc">${p[1]}</p>
           <div class="card-foot">
-            <span class="price">$${p.toLocaleString('es-AR')}</span>
+            <span class="price">$${p[2].toLocaleString('es-AR')}</span>
             <button class="add-btn" onclick="add(${i})">+ Agregar</button>
           </div>
         </div>
@@ -167,11 +167,11 @@
     }
     function upd() {
       document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
-      const tot = cart.reduce((s, x) => s + (items[x.i] * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (items[x.i][2] * x.c), 0);
       document.getElementById("total").innerText = "$" + tot.toLocaleString('es-AR');
       document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => `
         <div class="cart-item">
-          <div><strong>${items[x.i]}</strong><br><span style="color:var(--gold)">$${(items[x.i]*x.c).toLocaleString('es-AR')}</span></div>
+          <div><strong>${items[x.i][0]}</strong><br><span style="color:var(--gold)">$${(items[x.i][2]*x.c).toLocaleString('es-AR')}</span></div>
           <div>
             <button class="qty-btn" onclick="qty(${x.i},-1)">-</button>
             <span style="margin:0 6px">${x.c}</span>
@@ -184,8 +184,8 @@
     function enviarWA() {
       if (!cart.length) return alert("Agregá productos primero.");
       let m = "Hola MUNDO COHETE! Mi pedido:\n\n";
-      cart.forEach(x => m += `- ${x.c}x ${items[x.i]} ($${(items[x.i]*x.c).toLocaleString('es-AR')})\n`);
-      const tot = cart.reduce((s, x) => s + (items[x.i] * x.c), 0);
+      cart.forEach(x => m += `- ${x.c}x ${items[x.i][0]} ($${(items[x.i][2]*x.c).toLocaleString('es-AR')})\n`);
+      const tot = cart.reduce((s, x) => s + (items[x.i][2] * x.c), 0);
       m += `\nTotal: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
       window.location.href = `whatsapp://send?phone=${TEL}&text=${encodeURIComponent(m)}`;
     }
