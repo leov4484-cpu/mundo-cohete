@@ -183,7 +183,9 @@
       document.getElementById("total").innerText = "$" + tot.toLocaleString('es-AR');
       document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
         const unit = getPrecio(items[x.i][2], x.c);
-        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(Precio promo 3+)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s para ahorrar $1.000 c/u)</span>';
+        const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
+        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3+!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
+        
         return `
         <div class="cart-item">
           <div>
