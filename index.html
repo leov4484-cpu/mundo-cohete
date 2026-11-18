@@ -205,10 +205,60 @@
         </div>
       `}).join('') : '<p style="color:var(--muted);text-align:center;margin-top:2rem">Tu carrito est&aacute; vac&iacute;o.</p>';
             }
+    let cart = [];
+
+    function getPrecio(base, cant) {
+      return cant >= 3 ? base : base + 1000;
+    }
+
+    document.getElementById("grid").innerHTML = items.map((p, i) => `
+      <div class="card">
+        <img src="${p}" onerror="this.src='${RESP}'">
+        <div class="card-body">
+          <h3 class="card-title">${p}</h3>
+          <p class="card-desc">${p}</p>
+          <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:2px;">Llevando 3 o m&aacute;s:</div>
+          <div class="card-foot">
+            <div>
+              <span class="price">$${p.toLocaleString('es-AR')}</span>
+              <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(p + 1000).toLocaleString('es-AR')} c/u</div>
+            </div>
+            <button class="add-btn" onclick="add(${i})">+ Agregar</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    function add(i) {
+      const ex = cart.find(x => x.i === i);
+      if (ex) ex.c++; else cart.push({ i, c: 1 });
+      upd();
+      const t = document.getElementById("toast");
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 1400);
+    }
+
+    function qty(i, d) {
+      const ex = cart.find(x => x.i === i);
+      if (!ex) return;
+      ex.c += d;
+      if (ex.c <= 0) cart = cart.filter(x => x.i !== i);
+      upd();
+    }
+
+    function upd() {
+      document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
+      const totRegular = cart.reduce((s, x) => s + ((items[x.i] + 1000) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
+      document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
+      document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
+        const unit = getPrecio(items[x.i], x.c);
+        const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
+        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3 o m&aacute;s!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
         return `
         <div class="cart-item">
           <div>
-            <strong>${items[x.i][0]}</strong><br>
+            <strong>${items[x.i]}</strong><br>
             <span style="color:var(--gold)">$${(unit * x.c).toLocaleString('es-AR')}</span> <span style="font-size:0.8rem;color:#ccc;">($${unit.toLocaleString('es-AR')} c/u)</span><br>
             ${nota}
           </div>
@@ -227,14 +277,15 @@
       if (!cart.length) return alert("Agreg\u00e1 productos primero.");
       let m = "Hola MUNDO COHETE! Mi pedido:\n\n";
       cart.forEach(x => {
-        const unit = getPrecio(items[x.i][2], x.c);
-        m += `- ${x.c}x ${items[x.i][0]} ($${unit.toLocaleString('es-AR')} c/u = $${(unit * x.c).toLocaleString('es-AR')})\n`;
+        const unit = getPrecio(items[x.i], x.c);
+        m += `- ${x.c}x ${items[x.i]} ($${unit.toLocaleString('es-AR')} c/u = $${(unit * x.c).toLocaleString('es-AR')})\n`;
       });
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i][2], x.c) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
       m += `\nTotal: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
       window.location.href = `whatsapp://send?phone=${TEL}&text=${encodeURIComponent(m)}`;
     }
   </script>
 </body>
 </html>
+
 
