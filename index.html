@@ -71,10 +71,10 @@
     </div>
   </header>
   <section id="catalogo" class="container">
-    <div style="background:linear-gradient(135deg, #ff5500, #d93800); color:#fff; text-align:center; padding:1.4rem 1rem; border-radius:14px; margin-bottom:2rem; border:2px solid #ffcc00; box-shadow:0 4px 15px rgba(255,85,0,0.3);">
-      <h2 style="font-size:1.35rem; font-weight:900; text-transform:uppercase; margin-bottom:0.3rem; color:#ffcc00;">&#128293; &iexcl;COMPRANDO 15 ART&Iacute;CULOS O M&Aacute;S TE QUEDA EN PRECIO MAYORISTA! &#128293;</h2>
+        <div style="background:linear-gradient(135deg, #ff5500, #d93800); color:#fff; text-align:center; padding:1.4rem 1rem; border-radius:14px; margin-bottom:2rem; border:2px solid #ffcc00; box-shadow:0 4px 15px rgba(255,85,0,0.3);">
+      <h2 style="font-size:1.35rem; font-weight:900; text-transform:uppercase; margin-bottom:0.3rem; color:#ffcc00;">&#128293; &iexcl;COMPRANDO 15 ART&Iacute;CULOS O M&Aacute;S TE QUEDA EN PRECIO OFERTA! &#128293;</h2>
       <p style="font-size:0.95rem; font-weight:600; margin:0;">Pod&eacute;s combinar los productos que quieras del cat&aacute;logo. Consultanos por tu lista.</p>
-    </div>
+        </div>
     <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
     <div style="max-width:500px; margin:0 auto 2rem; position:relative;">
       <input type="text" id="buscador" oninput="filtrar()" placeholder="&#128269; Buscar producto (ej: torta, bengala, ca&ntilde;a...)" style="width:100%; padding:0.9rem 1.2rem; border-radius:50px; border:2px solid #252a3a; background:#131620; color:#fff; font-size:1rem; outline:none;" onfocus="this.style.borderColor='#ff5500'" onblur="this.style.borderColor='#252a3a'">
@@ -101,6 +101,7 @@
     <div class="modal-head"><h3>Tu Carrito</h3><button class="close-btn" onclick="toggleCart()">&#10005;</button></div>
     <div class="cart-list" id="cart-list"></div>
     <div>
+    <div id="promo-15" style="margin-bottom:0.8rem;"></div>
       <div class="total-row"><span>Total:</span><span id="total">$0</span></div>
       <button class="wa-btn" onclick="enviarWA()">Enviar pedido por WhatsApp &#128242;</button>
     </div>
@@ -236,8 +237,18 @@
       upd();
     }
 
-    function upd() {
-      document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
+        function upd() {
+      const totalCant = cart.reduce((s, x) => s + x.c, 0);
+      document.getElementById("count").innerText = totalCant;
+      const promoBox = document.getElementById("promo-15");
+      if (totalCant === 0) {
+        promoBox.innerHTML = "";
+      } else if (totalCant >= 15) {
+        promoBox.innerHTML = `<div style="background:rgba(37,211,102,0.15); border:1px solid #25D366; color:#25D366; padding:0.65rem; border-radius:8px; font-size:0.85rem; font-weight:700; text-align:center;">&#127881; &iexcl;Ya ten&eacute;s <strong>PRECIO OFERTA</strong> por llevar 15 o m&aacute;s art&iacute;culos!</div>`;
+      } else {
+        const faltan = 15 - totalCant;
+        promoBox.innerHTML = `<div style="background:rgba(255,204,0,0.12); border:1px solid #ffcc00; color:#ffcc00; padding:0.65rem; border-radius:8px; font-size:0.85rem; font-weight:600; text-align:center;">Llev&aacute;s <strong>${totalCant}</strong> ${totalCant === 1 ? 'art&iacute;culo' : 'art&iacute;culos'}. &iexcl;Sum&aacute; <strong>${faltan}</strong> m&aacute;s para acceder al <strong>PRECIO OFERTA</strong>!</div>`;
+      }
       const totRegular = cart.reduce((s, x) => s + ((items.at(x.i).p + 1000) * x.c), 0);
       const tot = cart.reduce((s, x) => s + (getPrecio(items.at(x.i).p, x.c) * x.c), 0);
       document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
@@ -266,6 +277,7 @@
 
     function enviarWA() {
       if (!cart.length) return alert("Agreg\u00e1 productos primero.");
+      const totalCant = cart.reduce((s, x) => s + x.c, 0);
       let m = "Hola MUNDO COHETE! Mi pedido:\n\n";
       cart.forEach(x => {
         const prod = items.at(x.i);
@@ -273,7 +285,10 @@
         m += `- ${x.c}x ${prod.n} ($${unit.toLocaleString('es-AR')} c/u = $${(unit * x.c).toLocaleString('es-AR')})\n`;
       });
       const tot = cart.reduce((s, x) => s + (getPrecio(items.at(x.i).p, x.c) * x.c), 0);
-      m += `\nTotal: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
+      if (totalCant >= 15) {
+        m += `\n*Aplica PRECIO OFERTA (${totalCant} articulos)*`;
+      }
+      m += `\nTotal estimado: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
       window.location.href = `whatsapp://send?phone=${TEL}&text=${encodeURIComponent(m)}`;
     }
   </script>
