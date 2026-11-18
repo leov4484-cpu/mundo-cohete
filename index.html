@@ -129,7 +129,7 @@
       { n: "Base misil 25 tiros x4 unid.", d: "Pack de 4 baterías de 25 disparos.", p: 16200, f: "base-misil.jpg" },
       { n: "Matabrujas x5 unid.", d: "Pack de 5 petardos de gran potencia.", p: 5000, f: "matabrujas.jpg" },
       { n: "Matabrujas caja x10 packs", d: "Caja mayorista con 10 packs.", p: 48000, f: "matabrujas.jpg" },
-      { n: "Cañón TH1 x2 unid.", d: "Pack de 2 cañones luminosos y sonoros.", p: 6600, f: "cañón-th1.jpg" },
+      { n: "Cañón TH1 x2 unid.", d: "Pack de 2 cañones luminosos y sonoros.", p: 6600, f: "canon-th1.jpg" },
       { n: "Volcancito estruendoso x5 unid.", d: "Pack de 5 fuentes con chispas y estruendo.", p: 5500, f: "volcancito.jpg" },
       { n: "Torta variedad 2000 x1 unid.", d: "Torta aérea con múltiples efectos.", p: 25000, f: "torta-2000.jpg", v: "p8RNS7V6qJA" },
       { n: "Torta coliseo x1 unid.", d: "Torta de luces con apertura amplia.", p: 20000, f: "torta-coliseo.jpg", v: "-RXdMLfdqSs" },
@@ -178,7 +178,7 @@
         <div class="card">
           <div style="position:relative;">
             <img src="${item.f}" onerror="this.src='${RESP}'" style="display:block;">
-                    ${item.v ? `<a href="${item.v.includes('.mp4') ? '#' : 'https://' + '://youtube.com' + item.v}" ${item.v.includes('.mp4') ? `onclick="verVid(${i}); return false;"` : 'target="_blank" rel="noopener"'} style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.88); color:#ffcc00; border:1px solid #ffcc00; padding:0.4rem 0.85rem; border-radius:50px; font-weight:800; font-size:0.8rem; text-decoration:none;">&#9654; Ver muestra</a>` : ''}
+                                ${item.v ? `<a href="${item.v}" target="_blank" rel="noopener" style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.88); color:#ffcc00; border:1px solid #ffcc00; padding:0.4rem 0.85rem; border-radius:50px; font-weight:800; font-size:0.8rem; text-decoration:none;">&#9654; Ver muestra</a>` : ''}
         </div>
           <div class="card-body">
             <h3 class="card-title">${item.n}</h3>
