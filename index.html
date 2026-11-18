@@ -76,6 +76,9 @@
       <p style="font-size:0.95rem; font-weight:600; margin:0;">Pod&eacute;s combinar los productos que quieras del cat&aacute;logo. Consultanos por tu lista.</p>
     </div>
     <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
+        <div style="max-width:500px; margin:0 auto 2rem; position:relative;">
+      <input type="text" id="buscador" oninput="filtrar()" placeholder="&#128269; Buscar producto (ej: torta, bengala, ca&ntilde;a...)" style="width:100%; padding:0.9rem 1.2rem; border-radius:50px; border:2px solid #252a3a; background:#131620; color:#fff; font-size:1rem; outline:none;" onfocus="this.style.borderColor='#ff5500'" onblur="this.style.borderColor='#252a3a'">
+        </div>
     <div class="grid" id="grid"></div>
     <div style="text-align:center; background:#131620; border:2px dashed #ff5500; border-radius:14px; padding:1.8rem 1.2rem; margin-top:2rem;">
       <h3 style="color:#ffcc00; font-size:1.25rem; margin-bottom:0.8rem;">&#127878; Y MUCHOS M&Aacute;S... CONSULT&Aacute; SI HAY ALGO QUE BUSQUES Y NO EST&Eacute; EN EL CAT&Aacute;LOGO</h3>
@@ -153,23 +156,34 @@
       return cant >= 3 ? base : base + 1000;
     }
 
-    document.getElementById("grid").innerHTML = items.map((item, i) => `
-      <div class="card">
-        <img src="${item.f}" onerror="this.src='${RESP}'">
-        <div class="card-body">
-          <h3 class="card-title">${item.n}</h3>
-          <p class="card-desc">${item.d}</p>
-          <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:2px;">Llevando 3 o m&aacute;s:</div>
-          <div class="card-foot">
-            <div>
-              <span class="price">$${item.p.toLocaleString('es-AR')}</span>
-              <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(item.p + 1000).toLocaleString('es-AR')} c/u</div>
+        function norm(txt) {
+      return txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function filtrar() {
+      const q = norm(document.getElementById("buscador").value.trim());
+      const res = items.map((item, i) => ({ item, i })).filter(x => norm(x.item.n + " " + x.item.d).includes(q));
+      document.getElementById("grid").innerHTML = res.length ? res.map(({ item, i }) => `
+        <div class="card">
+          <img src="${item.f}" onerror="this.src='${RESP}'">
+          <div class="card-body">
+            <h3 class="card-title">${item.n}</h3>
+            <p class="card-desc">${item.d}</p>
+            <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:2px;">Llevando 3 o m&aacute;s:</div>
+            <div class="card-foot">
+              <div>
+                <span class="price">$${item.p.toLocaleString('es-AR')}</span>
+                <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(item.p + 1000).toLocaleString('es-AR')} c/u</div>
+              </div>
+              <button class="add-btn" onclick="add(${i})">+ Agregar</button>
             </div>
-            <button class="add-btn" onclick="add(${i})">+ Agregar</button>
           </div>
         </div>
-      </div>
-    `).join('');
+      `).join('') : '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:2rem;">No encontramos productos con ese nombre. &iexcl;Consultanos por WhatsApp!</p>';
+    }
+
+    filtrar();
+    
 
     function add(i) {
       const ex = cart.find(x => x.i === i);
