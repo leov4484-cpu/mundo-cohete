@@ -181,16 +181,30 @@
       upd();
     }
 
-        function upd() {
+            function upd() {
       document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
-      const totRegular = cart.reduce((s, x) => s + ((items[x.i] + 1000) * x.c), 0);
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
+      const totRegular = cart.reduce((s, x) => s + ((items[x.i][2] + 1000) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i][2], x.c) * x.c), 0);
       document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
       document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
         const unit = getPrecio(items[x.i][2], x.c);
         const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
-        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3+!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
-        
+        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3 o m&aacute;s!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
+        return `
+        <div class="cart-item">
+          <div>
+            <strong>${items[x.i][0]}</strong><br>
+            <span style="color:var(--gold)">$${(unit * x.c).toLocaleString('es-AR')}</span> <span style="font-size:0.8rem;color:#ccc;">($${unit.toLocaleString('es-AR')} c/u)</span><br>
+            ${nota}
+          </div>
+          <div>
+            <button class="qty-btn" onclick="qty(${x.i},-1)">-</button>
+            <span style="margin:0 6px">${x.c}</span>
+            <button class="qty-btn" onclick="qty(${x.i},1)">+</button>
+          </div>
+        </div>
+      `}).join('') : '<p style="color:var(--muted);text-align:center;margin-top:2rem">Tu carrito est&aacute; vac&iacute;o.</p>';
+            }
         return `
         <div class="cart-item">
           <div>
