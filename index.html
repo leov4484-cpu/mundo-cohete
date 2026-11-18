@@ -195,18 +195,25 @@
       `).join('') : '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:2rem;">No encontramos productos con ese nombre. &iexcl;Consultanos por WhatsApp!</p>';
     }
 
-    function verVid(i) {
+        function verVid(i) {
       const prod = items.at(i);
       document.getElementById("vid-titulo").innerText = prod.n;
       const box = document.getElementById("vid-box");
       if (prod.v.includes("http")) {
-        box.innerHTML = `<iframe src="${prod.v}" style="width:100%; height:480px; border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        const vidId = prod.v.split("/embed/")[1]?.split("?")[0] || "";
+        const embedUrl = vidId ? `https://youtube-nocookie.com{vidId}?autoplay=1&rel=0` : prod.v;
+        const watchUrl = vidId ? `https://youtube.com{vidId}` : prod.v;
+        box.innerHTML = `
+          <div style="width:100%; display:flex; flex-direction:column;">
+            <iframe src="${embedUrl}" style="width:100%; height:440px; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="${watchUrl}" target="_blank" style="background:#ff0000; color:#fff; text-align:center; padding:0.75rem; font-weight:800; text-decoration:none; font-size:0.9rem;">&#9654; Si no carga arriba, mirar directo en YouTube</a>
+          </div>`;
       } else {
         box.innerHTML = `<video src="${prod.v}" controls autoplay playsinline style="width:100%; max-height:70vh;"></video>`;
       }
       document.getElementById("vid-modal").style.display = "flex";
-    }
-
+        }
+      
     function cerrarVid() {
       document.getElementById("vid-modal").style.display = "none";
       document.getElementById("vid-box").innerHTML = "";
