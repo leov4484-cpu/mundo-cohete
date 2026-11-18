@@ -71,6 +71,10 @@
     </div>
   </header>
   <section id="catalogo" class="container">
+        <div style="background:linear-gradient(135deg, #ff5500, #d93800); color:#fff; text-align:center; padding:1.4rem 1rem; border-radius:14px; margin-bottom:2rem; border:2px solid #ffcc00; box-shadow:0 4px 15px rgba(255,85,0,0.3);">
+      <h2 style="font-size:1.35rem; font-weight:900; text-transform:uppercase; margin-bottom:0.3rem; color:#ffcc00;">&#128293; &iexcl;COMPRANDO 15 ART&Iacute;CULOS O M&Aacute;S TE QUEDA EN PRECIO MAYORISTA! &#128293;</h2>
+      <p style="font-size:0.95rem; font-weight:600; margin:0;">Pod&eacute;s combinar los productos que quieras del cat&aacute;logo. Consultanos por tu lista.</p>
+        </div>
     <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
     <div class="grid" id="grid"></div>
     <div style="text-align:center; background:#131620; border:2px dashed #ff5500; border-radius:14px; padding:1.8rem 1.2rem; margin-top:2rem;">
@@ -177,10 +181,11 @@
       upd();
     }
 
-    function upd() {
+        function upd() {
       document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i][2], x.c) * x.c), 0);
-      document.getElementById("total").innerText = "$" + tot.toLocaleString('es-AR');
+      const totRegular = cart.reduce((s, x) => s + ((items[x.i] + 1000) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
+      document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
       document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
         const unit = getPrecio(items[x.i][2], x.c);
         const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
