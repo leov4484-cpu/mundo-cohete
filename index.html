@@ -23,7 +23,7 @@
     .btn-main { background: var(--accent); color: #fff; padding: 0.8rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: 700; }
     .btn-sec { background: #1f2433; color: #fff; border: 1px solid #444; padding: 0.8rem 1.4rem; border-radius: 8px; text-decoration: none; font-weight: 700; }
     .container { max-width: 1100px; margin: 0 auto; padding: 2rem 5%; }
-    .sec-title { text-align: center; margin-bottom: 2rem; }
+    .sec-title { text-align: center; margin-bottom: 1.5rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
     .card { background: var(--card); border: 1px solid #252a3a; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
     .card img { width: 100%; height: 180px; object-fit: cover; background: #1c2030; }
@@ -76,9 +76,9 @@
       <p style="font-size:0.95rem; font-weight:600; margin:0;">Pod&eacute;s combinar los productos que quieras del cat&aacute;logo. Consultanos por tu lista.</p>
     </div>
     <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
-        <div style="max-width:500px; margin:0 auto 2rem; position:relative;">
+    <div style="max-width:500px; margin:0 auto 2rem; position:relative;">
       <input type="text" id="buscador" oninput="filtrar()" placeholder="&#128269; Buscar producto (ej: torta, bengala, ca&ntilde;a...)" style="width:100%; padding:0.9rem 1.2rem; border-radius:50px; border:2px solid #252a3a; background:#131620; color:#fff; font-size:1rem; outline:none;" onfocus="this.style.borderColor='#ff5500'" onblur="this.style.borderColor='#252a3a'">
-        </div>
+    </div>
     <div class="grid" id="grid"></div>
     <div style="text-align:center; background:#131620; border:2px dashed #ff5500; border-radius:14px; padding:1.8rem 1.2rem; margin-top:2rem;">
       <h3 style="color:#ffcc00; font-size:1.25rem; margin-bottom:0.8rem;">&#127878; Y MUCHOS M&Aacute;S... CONSULT&Aacute; SI HAY ALGO QUE BUSQUES Y NO EST&Eacute; EN EL CAT&Aacute;LOGO</h3>
@@ -106,16 +106,8 @@
     </div>
   </div>
   <div class="toast" id="toast">Agregado al carrito</div>
-    <div id="vid-modal" onclick="cerrarVid()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:300; align-items:center; justify-content:center; padding:1rem;">
-    <div onclick="event.stopPropagation()" style="background:#131620; border:2px solid #ff5500; border-radius:14px; max-width:450px; width:100%; overflow:hidden;">
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.8rem 1rem; border-bottom:1px solid #252a3a;">
-        <strong id="vid-titulo" style="color:#ffcc00; font-size:0.95rem;">Muestra</strong>
-        <button onclick="cerrarVid()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">&#10005;</button>
-      </div>
-      <div id="vid-box" style="background:#000; display:flex; align-items:center; justify-content:center;"></div>
-    </div>
-    </div>
-    <script>
+  <div id="vid-modal" onclick="cerrarVid()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:300; align-items:center; justify-content:center; padding:1rem;">
+      <script>
     const TEL = "542645859859";
     const RESP = "https://unsplash.com";
     const items = [
@@ -129,11 +121,10 @@
       { n: "Base misil 25 tiros x4 unid.", d: "Pack de 4 baterías de 25 disparos.", p: 16200, f: "base-misil.jpg" },
       { n: "Matabrujas x5 unid.", d: "Pack de 5 petardos de gran potencia.", p: 5000, f: "matabrujas.jpg" },
       { n: "Matabrujas caja x10 packs", d: "Caja mayorista con 10 packs.", p: 48000, f: "matabrujas.jpg" },
-      { n: "Cañón TH1 x2 unid.", d: "Pack de 2 cañones luminosos y sonoros.", p: 6600, f: "canon-th1.jpg" },
+      { n: "Cañón TH1 x2 unid.", d: "Pack de 2 cañones luminosos y sonoros.", p: 6600, f: "cañón-th1.jpg" },
       { n: "Volcancito estruendoso x5 unid.", d: "Pack de 5 fuentes con chispas y estruendo.", p: 5500, f: "volcancito.jpg" },
-            { n: "Torta variedad 2000 x1 unid.", d: "Torta aérea con múltiples efectos.", p: 25000, f: "torta-2000.jpg", v: "https://youtube.com" },
-      { n: "Torta coliseo x1 unid.", d: "Torta de luces con apertura amplia.", p: 20000, f: "torta-coliseo.jpg", v: "https://youtube.com" },
-      
+      { n: "Torta variedad 2000 x1 unid.", d: "Torta aérea con múltiples efectos.", p: 25000, f: "torta-2000.jpg", v: "p8RNS7V6qJA" },
+      { n: "Torta coliseo x1 unid.", d: "Torta de luces con apertura amplia.", p: 20000, f: "torta-coliseo.jpg", v: "-RXdMLfdqSs" },
       { n: "Huevito de dragón x24 unid.", d: "Caja con 24 unidades crepitantes.", p: 14000, f: "huevito.jpg" },
       { n: "Fogueta 3 tiros x3 unid.", d: "Pack de 3 foguetas de 3 disparos.", p: 7700, f: "fogueta.jpg" },
       { n: "Cañita salvadora x12 unid.", d: "Pack de 12 cañitas voladoras.", p: 3000, f: "canita.jpg" },
@@ -151,26 +142,28 @@
       { n: "Estrellitas x10 packs x5 unid.", d: "10 packs de 5 estrellitas cada uno.", p: 6000, f: "estrellitas.jpg" },
       { n: "Estrellitas x10 packs x10 unid.", d: "10 packs de 10 estrellitas cada uno.", p: 9000, f: "estrellitas.jpg" },
       { n: "Batería x40 unid.", d: "Batería de 40 disparos consecutivos.", p: 19300, f: "batería-40.jpg" },
-      { n: "Batería x10 unid.", d: "Batería compacta de 10 disparos.", p: 6800, f: "batería.jpg" },      { n: "Torta París x1 unid.", d: "10 tiros de gran apertura y color.", p: 45000, f: "torta-paris.jpg" },
-      { n: "Torta Thunder King x1 unid.", d: "16 tiros aéreos de impacto.", p: 22000, f: "torta-thunder-king.jpg" },
-      { n: "Torta Glaciar x1 unid.", d: "16 tiros luminosos de efectos variados.", p: 28000, f: "torta-glaciar.jpg" },
-      { n: "Torta Aquiles x1 unid.", d: "16 tiros de máxima potencia y apertura.", p: 55000, f: "torta-aquiles.jpg" },
+      { n: "Batería x10 unid.", d: "Batería compacta de 10 disparos.", p: 6800, f: "batería.jpg" },
+      { n: "Torta París x1 unid.", d: "10 tiros de gran apertura y color.", p: 45000, f: "torta-paris.jpg", v: "7SlQHt0pbS8" },
+      { n: "Torta Thunder King x1 unid.", d: "16 tiros aéreos de impacto.", p: 22000, f: "torta-thunder-king.jpg", v: "Fx-WwEyRETU" },
+      { n: "Torta Glaciar x1 unid.", d: "16 tiros luminosos de efectos variados.", p: 28000, f: "torta-glaciar.jpg", v: "A4bltLjWtpA" },
+      { n: "Torta Aquiles x1 unid.", d: "16 tiros de máxima potencia y apertura.", p: 55000, f: "torta-aquiles.jpg", v: "oHtNuRlDUEw" },
       { n: "Súper Cañón x2 unid.", d: "12 tiros + bomba final.", p: 16600, f: "super-canon.jpg" },
-      { n: "Bomba Shell 1 ½ Color x6 unid.", d: "Pack de 6 bombas aéreas de color.", p: 37000, f: "bomba-shell.jpg" },
-      { n: "Caña Bomba x6 unid.", d: "Pack de 6 cañas voladoras con bomba.", p: 19500, f: "cana-bomba.jpg" }
+      { n: "Bomba Shell 1 ½ Color x6 unid.", d: "Pack de 6 bombas aéreas de color.", p: 37000, f: "bomba-shell.jpg", v: "_U8CdAlZzwE" },
+      { n: "Caña Bomba x6 unid.", d: "Pack de 6 cañas voladoras con bomba.", p: 19500, f: "cana-bomba.jpg", v: "m-ILLNFfo00" }
     ];
-
-    let cart = [];
+            let cart = [];
+    const YT_EMBED = "https:" + "//://youtube-nocookie.com";
+    const YT_WATCH = "https:" + "//://youtube.com";
 
     function getPrecio(base, cant) {
       return cant >= 3 ? base : base + 1000;
     }
 
-        function norm(txt) {
+    function norm(txt) {
       return txt.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-        function filtrar() {
+    function filtrar() {
       const q = norm(document.getElementById("buscador").value.trim());
       const res = items.map((item, i) => ({ item, i })).filter(x => norm(x.item.n + " " + x.item.d).includes(q));
       document.getElementById("grid").innerHTML = res.length ? res.map(({ item, i }) => `
@@ -195,35 +188,28 @@
       `).join('') : '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:2rem;">No encontramos productos con ese nombre. &iexcl;Consultanos por WhatsApp!</p>';
     }
 
-        function verVid(i) {
-      co    function verVid(i) {
+    function verVid(i) {
       const prod = items.at(i);
       document.getElementById("vid-titulo").innerText = prod.n;
       const box = document.getElementById("vid-box");
-      if (prod.v.includes("http")) {
-        const vidId = prod.v.split("/embed/").pop().split("?").shift();
-        const embedUrl = `https://youtube-nocookie.com{vidId}?autoplay=1&rel=0`;
-        const watchUrl = `https://youtube.com{vidId}`;
+      if (prod.v.includes(".mp4")) {
+        box.innerHTML = `<video src="${prod.v}" controls autoplay playsinline style="width:100%; max-height:70vh;"></video>`;
+      } else {
         box.innerHTML = `
           <div style="width:100%; display:flex; flex-direction:column;">
-            <iframe src="${embedUrl}" style="width:100%; height:440px; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <a href="${watchUrl}" target="_blank" style="background:#ff0000; color:#fff; text-align:center; padding:0.75rem; font-weight:800; text-decoration:none; font-size:0.9rem;">&#9654; Si no carga arriba, mirar directo en YouTube</a>
+            <iframe src="${YT_EMBED}${prod.v}?autoplay=1&rel=0" style="width:100%; height:440px; border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="${YT_WATCH}${prod.v}" target="_blank" style="background:#ff0000; color:#fff; text-align:center; padding:0.75rem; font-weight:800; text-decoration:none; font-size:0.9rem;">&#9654; Si no carga arriba, mirar directo en YouTube</a>
           </div>`;
-      } else {
-        box.innerHTML = `<video src="${prod.v}" controls autoplay playsinline style="width:100%; max-height:70vh;"></video>`;
       }
       document.getElementById("vid-modal").style.display = "flex";
-      }
-          
-      
+    }
+
     function cerrarVid() {
       document.getElementById("vid-modal").style.display = "none";
       document.getElementById("vid-box").innerHTML = "";
     }
 
     filtrar();
-      
-    
 
     function add(i) {
       const ex = cart.find(x => x.i === i);
