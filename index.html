@@ -160,7 +160,8 @@
       { n: "Bomba Shell 1 ½ Color x6 unid.", d: "Pack de 6 bombas aéreas de color.", p: 37000, f: "bomba-shell.jpg", v: "bomba-shell.mp4" },
       { n: "Caña Bomba x6 unid.", d: "Pack de 6 cañas voladoras con bomba.", p: 19500, f: "cana-bomba.jpg", v: "Cana-Bomba.mp4" }
     ];
-            let cart = [];
+        items.sort((a, b) => a.n.localeCompare(b.n, 'es'));    
+       let cart = [];
     const YT_EMBED = "https:" + "//://youtube-nocookie.com";
     const YT_WATCH = "https:" + "//://youtube.com";
 
