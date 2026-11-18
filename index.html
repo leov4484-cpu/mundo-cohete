@@ -43,7 +43,7 @@
     .cart-list { flex-grow: 1; overflow-y: auto; padding: 1rem 0; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid #222; gap: 0.5rem; }
     .qty-btn { background: #262b3d; border: none; color: #fff; width: 28px; height: 28px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-    .total-row { display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; margin: 1rem 0; }
+    .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 1.25rem; font-weight: 800; margin: 1rem 0; }
     .wa-btn { width: 100%; background: #25D366; color: #000; border: none; padding: 0.9rem; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; }
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 0.7rem 1.3rem; border-radius: 50px; font-weight: 600; z-index: 200; opacity: 0; pointer-events: none; transition: 0.3s; }
     .toast.show { opacity: 1; }
@@ -71,10 +71,10 @@
     </div>
   </header>
   <section id="catalogo" class="container">
-        <div style="background:linear-gradient(135deg, #ff5500, #d93800); color:#fff; text-align:center; padding:1.4rem 1rem; border-radius:14px; margin-bottom:2rem; border:2px solid #ffcc00; box-shadow:0 4px 15px rgba(255,85,0,0.3);">
+    <div style="background:linear-gradient(135deg, #ff5500, #d93800); color:#fff; text-align:center; padding:1.4rem 1rem; border-radius:14px; margin-bottom:2rem; border:2px solid #ffcc00; box-shadow:0 4px 15px rgba(255,85,0,0.3);">
       <h2 style="font-size:1.35rem; font-weight:900; text-transform:uppercase; margin-bottom:0.3rem; color:#ffcc00;">&#128293; &iexcl;COMPRANDO 15 ART&Iacute;CULOS O M&Aacute;S TE QUEDA EN PRECIO MAYORISTA! &#128293;</h2>
       <p style="font-size:0.95rem; font-weight:600; margin:0;">Pod&eacute;s combinar los productos que quieras del cat&aacute;logo. Consultanos por tu lista.</p>
-        </div>
+    </div>
     <div class="sec-title"><h2>Cat&aacute;logo Completo</h2><p>Toc&aacute; "+ Agregar" en cada art&iacute;culo y luego envi&aacute; tu pedido desde el carrito.</p></div>
     <div class="grid" id="grid"></div>
     <div style="text-align:center; background:#131620; border:2px dashed #ff5500; border-radius:14px; padding:1.8rem 1.2rem; margin-top:2rem;">
@@ -103,125 +103,61 @@
     </div>
   </div>
   <div class="toast" id="toast">Agregado al carrito</div>
-      <script>
+    <script>
     const TEL = "542645859859";
     const RESP = "https://unsplash.com";
     const items = [
-      ["Estallos Cash Boom (Caja x40 unid.)", "Caja cerrada con 40 cajitas.", 15000, "estallos-40.jpg"],
-      ["Estallos Cash Boom (Pack x5 unid.)", "Pack de 5 cajitas de estallos.", 2500, "estallos.jpg"],
-      ["Fósforo cohete x40 unid.", "Caja con 40 unidades de estruendo.", 6500, "fosforo.jpg"],
-      ["Floreritos x20 unid.", "Pack de 20 floreritos.", 5500, "floreritos.jpg"],
-      ["Colita de dragón x40 unid.", "Pack de 40 unidades de efecto chispeante.", 2500, "colita.jpg"],
-      ["Bengala de humo x5 unid.", "Pack de 5 bengalas de humo de color.", 4200, "bengala-humo.jpg"],
-      ["Base misil 16 tiros x4 unid.", "Pack de 4 bases de 16 disparos.", 12300, "base-misil.jpg"],
-      ["Base misil 25 tiros x4 unid.", "Pack de 4 bases de 25 disparos.", 16200, "base-misil.jpg"],
-      ["Matabrujas x5 unid.", "Pack de 5 petardos de gran potencia.", 5000, "matabrujas.jpg"],
-      ["Matabrujas caja x10 packs", "Caja con 10 packs y 50 unid.", 48000, "matabrujas.jpg"],
-      ["Cañón TH1 x2 unid.", "Pack de 2 cañones luminosos y sonoros.", 6600, "canon-th1.jpg"],
-      ["Volcancito estruendoso x5 unid.", "Pack de 5 volcanes con chispas y estruendo.", 5500, "volcancito.jpg"],
-      ["Torta variedad 2000 x1 unid.", "Torta aérea con múltiples efectos.", 25000, "torta-2000.jpg"],
-      ["Torta coliseo x1 unid.", "Torta 12 fuegos artificiales.", 20000, "torta-coliseo.jpg"],
-      ["Huevito de dragón x24 unid.", "Caja con 24 packs de 5 unid crepitantes.", 14000, "huevito.jpg"],
-      ["Fogueta 3 tiros x3 unid.", "Pack de 3 foguetas de 3 disparos.", 7700, "fogueta.jpg"],
-      ["Cañita salvadora x12 unid.", "Pack de 12 cañitas voladoras.", 3000, "canita.jpg"],
-      ["Cañita salvadora x12 packs", "caja con 12 packs y 144 unid.", 30500, "canita.jpg"],
-      ["Caña paracaídas x6 unid.", "Pack de 6 cañas con paracaídas luminoso.", 6200, "caña-paracaidas.jpg"],
-      ["Candela 10 tiros x6 unid.", "Pack de 6 candelas de 10 disparos.", 5500, "candela-10.jpg"],
-      ["Candela 20 tiros x6 unid.", "Pack de 6 candelas de 20 disparos.", 7800, "candela.jpg"],
-      ["Candela 30 tiros x6 unid.", "Pack de 6 candelas de 30 disparos.", 9700, "candela-30.jpg"],
-      ["Avioncito x6 unid.", "Pack de 6 avioncitos giratorios.", 6500, "avioncito.jpg"],
-      ["Abejitas giratoria x12 unid.", "Pack de 12 abejitas luminosas.", 4500, "abejitas.jpg"],
-      ["Mortero x6 unid.", "Pack de 6 morteros de impacto aéreo.", 10600, "mortero.jpg"],
-      ["Terremoto x5 unid.", "Pack de 5 petardos de alto impacto.", 4000, "terremoto.jpg"],
-      ["Terremoto caja x10 packs", "Caja con 10 packs con 50 unid.", 30000, "terremoto.jpg"],
-      ["Bengalita x5 packs", "Combo de 5 packs de bengalitas.", 11300, "bengalita.jpg"],
-      ["Estrellitas x10 packs x5 unid.", "10 packs de 5 estrellitas cada uno.", 6000, "estrellitas.jpg"],
-      ["Estrellitas x10 packs x10 unid.", "10 packs de 10 estrellitas cada uno.", 9000, "estrellitas.jpg"],
-      ["Batería x40 unid.", "Batería de 40 packs de 14 tiros.", 19300, "batería-40.jpg"],
-      ["Batería x10 unid.", "Batería de 10 packs de 14 tiros.", 6800, "batería.jpg"]
+      { n: "Estallos Cash Boom (Caja x40 unid.)", d: "Caja cerrada con 40 cajitas.", p: 15000, f: "estallos.jpg" },
+      { n: "Estallos Cash Boom (Pack x5 unid.)", d: "Pack de 5 cajitas de estallos.", p: 2500, f: "estallos.jpg" },
+      { n: "Fósforo cohete x40 unid.", d: "Caja con 40 unidades con silbido y estruendo.", p: 6500, f: "fosforo.jpg" },
+      { n: "Floreritos x20 unid.", d: "Pack de 20 floreritos luminosos de colores.", p: 5500, f: "floreros.jpg" },
+      { n: "Colita de dragón x40 unid.", d: "Pack de 40 unidades de efecto chispeante.", p: 2500, f: "colita.jpg" },
+      { n: "Bengala de humo x5 unid.", d: "Pack de 5 bengalas de humo de color.", p: 4200, f: "bengala-humo.jpg" },
+      { n: "Base misil 16 tiros x4 unid.", d: "Pack de 4 baterías de 16 disparos.", p: 12300, f: "base-misil.jpg" },
+      { n: "Base misil 25 tiros x4 unid.", d: "Pack de 4 baterías de 25 disparos.", p: 16200, f: "base-misil.jpg" },
+      { n: "Matabrujas x5 unid.", d: "Pack de 5 petardos de gran potencia.", p: 5000, f: "matabrujas.jpg" },
+      { n: "Matabrujas caja x10 packs", d: "Caja mayorista con 10 packs.", p: 48000, f: "matabrujas.jpg" },
+      { n: "Cañón TH1 x2 unid.", d: "Pack de 2 cañones luminosos y sonoros.", p: 6600, f: "cañón-th1.jpg" },
+      { n: "Volcancito estruendoso x5 unid.", d: "Pack de 5 fuentes con chispas y estruendo.", p: 5500, f: "volcancito.jpg" },
+      { n: "Torta variedad 2000 x1 unid.", d: "Torta aérea con múltiples efectos.", p: 25000, f: "torta-2000.jpg" },
+      { n: "Torta coliseo x1 unid.", d: "Torta de luces con apertura amplia.", p: 20000, f: "torta-coliseo.jpg" },
+      { n: "Huevito de dragón x24 unid.", d: "Caja con 24 unidades crepitantes.", p: 14000, f: "huevito.jpg" },
+      { n: "Fogueta 3 tiros x3 unid.", d: "Pack de 3 foguetas de 3 disparos.", p: 7700, f: "fogueta.jpg" },
+      { n: "Cañita salvadora x12 unid.", d: "Pack de 12 cañitas voladoras.", p: 3000, f: "canita.jpg" },
+      { n: "Cañita salvadora x12 packs", d: "Bulto mayorista con 12 packs.", p: 30500, f: "canita.jpg" },
+      { n: "Caña paracaídas x6 unid.", d: "Pack de 6 cañas con paracaídas luminoso.", p: 6200, f: "caña-paracaidas.jpg" },
+      { n: "Candela 10 tiros x6 unid.", d: "Pack de 6 candelas de 10 disparos.", p: 5500, f: "candela-10.jpg" },
+      { n: "Candela 20 tiros x6 unid.", d: "Pack de 6 candelas de 20 disparos.", p: 7800, f: "candela.jpg" },
+      { n: "Candela 30 tiros x6 unid.", d: "Pack de 6 candelas de 30 disparos.", p: 9700, f: "candela-30.jpg" },
+      { n: "Avioncito x6 unid.", d: "Pack de 6 avioncitos giratorios.", p: 6500, f: "avioncito.jpg" },
+      { n: "Abejitas giratoria x12 unid.", d: "Pack de 12 abejitas luminosas.", p: 4500, f: "abejitas.jpg" },
+      { n: "Mortero x6 unid.", d: "Pack de 6 morteros de impacto aéreo.", p: 10600, f: "mortero.jpg" },
+      { n: "Terremoto x5 unid.", d: "Pack de 5 petardos de alto impacto.", p: 4000, f: "terremoto.jpg" },
+      { n: "Terremoto caja x10 packs", d: "Caja mayorista con 10 packs.", p: 30000, f: "terremoto.jpg" },
+      { n: "Bengalita x5 packs", d: "Combo de 5 packs de bengalitas.", p: 11300, f: "bengalita.jpg" },
+      { n: "Estrellitas x10 packs x5 unid.", d: "10 packs de 5 estrellitas cada uno.", p: 6000, f: "estrellitas.jpg" },
+      { n: "Estrellitas x10 packs x10 unid.", d: "10 packs de 10 estrellitas cada uno.", p: 9000, f: "estrellitas.jpg" },
+      { n: "Batería x40 unid.", d: "Batería de 40 disparos consecutivos.", p: 19300, f: "batería-40.jpg" },
+      { n: "Batería x10 unid.", d: "Batería compacta de 10 disparos.", p: 6800, f: "batería.jpg" }
     ];
-     let cart = [];
 
-    function getPrecio(base, cant) {
-      return cant >= 3 ? base : base + 1000;
-    }
-
-    document.getElementById("grid").innerHTML = items.map((p, i) => `
-      <div class="card">
-        <img src="${p[3]}" onerror="this.src='${RESP}'">
-        <div class="card-body">
-          <h3 class="card-title">${p[0]}</h3>
-          <p class="card-desc">${p[1]}</p>
-          <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:2px;">Llevando 3 o m&aacute;s:</div>
-          <div class="card-foot">
-            <div>
-              <span class="price">$${p[2].toLocaleString('es-AR')}</span>
-              <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(p[2] + 1000).toLocaleString('es-AR')} c/u</div>
-            </div>
-            <button class="add-btn" onclick="add(${i})">+ Agregar</button>
-          </div>
-        </div>
-      </div>
-    `).join('');
-
-    function add(i) {
-      const ex = cart.find(x => x.i === i);
-      if (ex) ex.c++; else cart.push({ i, c: 1 });
-      upd();
-      const t = document.getElementById("toast");
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 1400);
-    }
-
-    function qty(i, d) {
-      const ex = cart.find(x => x.i === i);
-      if (!ex) return;
-      ex.c += d;
-      if (ex.c <= 0) cart = cart.filter(x => x.i !== i);
-      upd();
-    }
-
-            function upd() {
-      document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
-      const totRegular = cart.reduce((s, x) => s + ((items[x.i][2] + 1000) * x.c), 0);
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i][2], x.c) * x.c), 0);
-      document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
-      document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
-        const unit = getPrecio(items[x.i][2], x.c);
-        const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
-        const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3 o m&aacute;s!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
-        return `
-        <div class="cart-item">
-          <div>
-            <strong>${items[x.i][0]}</strong><br>
-            <span style="color:var(--gold)">$${(unit * x.c).toLocaleString('es-AR')}</span> <span style="font-size:0.8rem;color:#ccc;">($${unit.toLocaleString('es-AR')} c/u)</span><br>
-            ${nota}
-          </div>
-          <div>
-            <button class="qty-btn" onclick="qty(${x.i},-1)">-</button>
-            <span style="margin:0 6px">${x.c}</span>
-            <button class="qty-btn" onclick="qty(${x.i},1)">+</button>
-          </div>
-        </div>
-      `}).join('') : '<p style="color:var(--muted);text-align:center;margin-top:2rem">Tu carrito est&aacute; vac&iacute;o.</p>';
-            }
     let cart = [];
 
     function getPrecio(base, cant) {
       return cant >= 3 ? base : base + 1000;
     }
 
-    document.getElementById("grid").innerHTML = items.map((p, i) => `
+    document.getElementById("grid").innerHTML = items.map((item, i) => `
       <div class="card">
-        <img src="${p}" onerror="this.src='${RESP}'">
+        <img src="${item.f}" onerror="this.src='${RESP}'">
         <div class="card-body">
-          <h3 class="card-title">${p}</h3>
-          <p class="card-desc">${p}</p>
+          <h3 class="card-title">${item.n}</h3>
+          <p class="card-desc">${item.d}</p>
           <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:2px;">Llevando 3 o m&aacute;s:</div>
           <div class="card-foot">
             <div>
-              <span class="price">$${p.toLocaleString('es-AR')}</span>
-              <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(p + 1000).toLocaleString('es-AR')} c/u</div>
+              <span class="price">$${item.p.toLocaleString('es-AR')}</span>
+              <div style="font-size:0.75rem; color:var(--muted);">1 o 2 unid.: $${(item.p + 1000).toLocaleString('es-AR')} c/u</div>
             </div>
             <button class="add-btn" onclick="add(${i})">+ Agregar</button>
           </div>
@@ -248,17 +184,18 @@
 
     function upd() {
       document.getElementById("count").innerText = cart.reduce((s, x) => s + x.c, 0);
-      const totRegular = cart.reduce((s, x) => s + ((items[x.i] + 1000) * x.c), 0);
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
+      const totRegular = cart.reduce((s, x) => s + ((items.at(x.i).p + 1000) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items.at(x.i).p, x.c) * x.c), 0);
       document.getElementById("total").innerHTML = totRegular > tot ? `<span style="text-decoration:line-through; color:var(--muted); font-size:0.95rem; margin-right:8px;">$${totRegular.toLocaleString('es-AR')}</span><span style="color:var(--gold);">$${tot.toLocaleString('es-AR')}</span>` : `$${tot.toLocaleString('es-AR')}`;
       document.getElementById("cart-list").innerHTML = cart.length ? cart.map(x => {
-        const unit = getPrecio(items[x.i], x.c);
+        const prod = items.at(x.i);
+        const unit = getPrecio(prod.p, x.c);
         const ahorro = (x.c >= 3 ? x.c : 3) * 1000;
         const nota = x.c >= 3 ? '<span style="color:#25D366;font-size:0.75rem;">(&iexcl;Ahorraste $' + ahorro.toLocaleString('es-AR') + ' llevando 3 o m&aacute;s!)</span>' : '<span style="color:var(--muted);font-size:0.75rem;">(Sum&aacute; ' + (3 - x.c) + ' m&aacute;s y ahorr&aacute; $3.000 en total)</span>';
         return `
         <div class="cart-item">
           <div>
-            <strong>${items[x.i]}</strong><br>
+            <strong>${prod.n}</strong><br>
             <span style="color:var(--gold)">$${(unit * x.c).toLocaleString('es-AR')}</span> <span style="font-size:0.8rem;color:#ccc;">($${unit.toLocaleString('es-AR')} c/u)</span><br>
             ${nota}
           </div>
@@ -277,15 +214,14 @@
       if (!cart.length) return alert("Agreg\u00e1 productos primero.");
       let m = "Hola MUNDO COHETE! Mi pedido:\n\n";
       cart.forEach(x => {
-        const unit = getPrecio(items[x.i], x.c);
-        m += `- ${x.c}x ${items[x.i]} ($${unit.toLocaleString('es-AR')} c/u = $${(unit * x.c).toLocaleString('es-AR')})\n`;
+        const prod = items.at(x.i);
+        const unit = getPrecio(prod.p, x.c);
+        m += `- ${x.c}x ${prod.n} ($${unit.toLocaleString('es-AR')} c/u = $${(unit * x.c).toLocaleString('es-AR')})\n`;
       });
-      const tot = cart.reduce((s, x) => s + (getPrecio(items[x.i], x.c) * x.c), 0);
+      const tot = cart.reduce((s, x) => s + (getPrecio(items.at(x.i).p, x.c) * x.c), 0);
       m += `\nTotal: $${tot.toLocaleString('es-AR')}\nCoordinamos envio a domicilio y pago.`;
       window.location.href = `whatsapp://send?phone=${TEL}&text=${encodeURIComponent(m)}`;
     }
   </script>
 </body>
 </html>
-
-
